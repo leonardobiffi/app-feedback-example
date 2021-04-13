@@ -1,0 +1,10 @@
+#!/bin/bash
+
+app=$1
+
+echo """AWS_ACCESS_KEY_ID=$2
+AWS_SECRET_ACCESS_KEY=$3
+QUEUE_SSM_PARAMETER=$4
+AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION""" > ../.env.$app
+
+exit 0

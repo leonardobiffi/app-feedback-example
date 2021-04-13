@@ -1,0 +1,40 @@
+version: "3"
+
+services:
+  api:
+    container_name: api
+    build:
+      context: ./api
+    ports:
+      - 80:80
+    env_file: .env.api
+  
+  worker:
+    container_name: worker
+    build:
+      context: ./worker
+    environment:
+      MONGO_URL: mongo
+      MONGO_PORT: 27017
+      MONGO_USERNAME: root
+      MONGO_PASSWORD: 1segredo
+      WORKERS: 3
+    env_file: .env.worker
+    
+  mongo:
+    image: mongo:4.4.5
+    container_name: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: 1segredo
+
+  mongo-express:
+    image: mongo-express
+    container_name: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: 1segredo
